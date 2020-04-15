@@ -1,56 +1,55 @@
 {
-  "name": "lazyuu/laravel-sls",
-  "type": "library",
-  "description": "Aliyun SLS Log For Laravel",
-  "keywords": [
-    "laravel",
-    "lokielse",
-    "aliyun",
-    "sls",
-    "log",
-    "driver",
-    "cloud",
-    "日志",
-    "阿里云",
-    "laravel-sls"
-  ],
-  "homepage": "https://github.com/lazyuu/laravel-sls",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "lazyuu",
-      "email": "lazyuu",
-      "homepage": "",
-      "role": "Developer"
+    "name": "lazy/laravel-sls",
+    "description": "一个适用于laravel的aliyun日志服务",
+    "keywords": [
+        "lazy",
+        "laravel-sls"
+    ],
+    "homepage": "https://github.com/lazy/laravel-sls",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "lazy",
+            "email": "729011771@qq.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/support": "~6.0",
+        "lokielse/aliyun-open-api-sls": "^1.0.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lazy\\LaravelSls\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lazy\\LaravelSls\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lazy\\LaravelSls\\LaravelSlsServiceProvider"
+            ],
+            "aliases": {
+                "LaravelSls": "Lazy\\LaravelSls\\LaravelSlsFacade"
+            }
+        }
     }
-  ],
-  "require": {
-    "illuminate/support": "~6.0",
-    "php": "~7.2",
-    "lokielse/aliyun-open-api-sls": "^1.0.0"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "~4.0||~5.0",
-    "scrutinizer/ocular": "~1.1",
-    "squizlabs/php_codesniffer": "~2.3"
-  },
-  "autoload": {
-    "psr-4": {
-      "Lokielse\\LaravelSLS\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Lokielse\\LaravelSLS\\": "tests"
-    }
-  },
-  "scripts": {
-    "test": "phpunit",
-    "format": "phpcbf --standard=psr2 src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0-dev"
-    }
-  }
 }

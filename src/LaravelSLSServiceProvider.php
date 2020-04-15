@@ -1,46 +1,58 @@
 <?php
 
-namespace Lokielse\LaravelSLS;
+namespace Lazy\LaravelSls;
 
 use Aliyun\SLS\Client;
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
+use Lokielse\LaravelSLS\SLSLog;
 
-class LaravelSLSServiceProvider extends ServiceProvider
+class LaravelSlsServiceProvider extends ServiceProvider
 {
-
+    /**
+     * Bootstrap the application services.
+     */
     public function boot()
     {
-        $this->publishes([ realpath(__DIR__ . '/../config/sls.php') => config_path('sls.php') ]);
+        /*
+         * Optional methods to load your package assets
+         */
+        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-sls');
+        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-sls');
+        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/config.php' => config_path('laravel-sls.php'),
+            ], 'config');
+        }
     }
 
-
     /**
-     * Add the connector to the queue drivers.
-     *
-     * @return void
+     * Register the application services.
      */
     public function register()
     {
-        $this->app->singleton('sls', function ($app) {
-            $config = $app['config']['sls'];
+        // Automatically apply the package configuration
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-sls');
 
-            $accessKeyId     = array_get($config, 'access_key_id');
-            $accessKeySecret = array_get($config, 'access_key_secret');
-            $endpoint        = array_get($config, 'endpoint');
-            $project         = array_get($config, 'project');
-            $store           = array_get($config, 'store');
+        // Register the main class to use with the facade
+        $this->app->singleton('laravel-sls', function ($app) {
+            $config = $app['config']['config'];
+            $accessKeyId        = Arr::get($config, 'access_key_id');
+            $accessKeySecret    = Arr::get($config, 'access_key_secret');
+            $endpoint           = Arr::get($config, 'endpoint');
+            $project            = Arr::get($config, 'project');
+            $store              = Arr::get($config, 'store');
 
             $client = new Client($endpoint, $accessKeyId, $accessKeySecret);
 
-            $log = new SLSLog($client);
+            $log = new LaravelSls($client);
             $log->setProject($project);
             $log->setLogStore($store);
 
             return $log;
         });
-
-        $config = $this->app['config']['sls'];
-
-        $this->app->instance('sls.writer', new Writer(app('sls'), $this->app['events'], $config['topic']));
     }
 }

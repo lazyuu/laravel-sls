@@ -1,6 +1,6 @@
 <?php
 
-namespace Lokielse\LaravelSLS;
+namespace Lazy\LaravelSls;
 
 use Aliyun\SLS\Client;
 use Aliyun\SLS\Models\LogItem;
@@ -13,10 +13,11 @@ use Aliyun\SLS\Responses\GetHistogramsResponse;
 use Aliyun\SLS\Responses\GetLogsResponse;
 use Aliyun\SLS\Responses\ListLogStoresResponse;
 use Aliyun\SLS\Responses\ListTopicsResponse;
+use Illuminate\Support\Arr;
+use Lokielse\LaravelSLS\SLSLog;
 
-class SLSLog
+class LaravelSls
 {
-
     /**
      * @var Client
      */
@@ -71,7 +72,7 @@ class SLSLog
         $request  = new PutLogsRequest($this->project, $this->logStore, $topic, $source, [ $logItem ]);
         $response = $this->client->putLogs($request);
 
-        return array_get($response->getAllHeaders(), '_info.http_code') === 200;
+        return Arr::get($response->getAllHeaders(), '_info.http_code') === 200;
     }
 
 
