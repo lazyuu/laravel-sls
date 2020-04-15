@@ -1,5 +1,5 @@
 {
-  "name": "elainekoo/laravel-sls",
+  "name": "lazyuu/laravel-sls",
   "type": "library",
   "description": "Aliyun SLS Log For Laravel",
   "keywords": [
@@ -14,13 +14,13 @@
     "阿里云",
     "laravel-sls"
   ],
-  "homepage": "https://github.com/elainekoo/laravel-sls",
+  "homepage": "https://github.com/lazyuu/laravel-sls",
   "license": "MIT",
   "authors": [
     {
-      "name": "lokielse",
-      "email": "lokielse@gmail.com",
-      "homepage": "http://lokielse.org",
+      "name": "lazyuu",
+      "email": "lazyuu",
+      "homepage": "",
       "role": "Developer"
     }
   ],
