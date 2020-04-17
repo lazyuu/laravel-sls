@@ -9,19 +9,13 @@ use Lokielse\LaravelSLS\SLSLog;
 
 class LaravelSlsServiceProvider extends ServiceProvider
 {
+    protected $defer = true;
+
     /**
      * Bootstrap the application services.
      */
     public function boot()
     {
-        /*
-         * Optional methods to load your package assets
-         */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravel-sls');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-sls');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
-
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('laravel-sls.php'),
@@ -35,11 +29,12 @@ class LaravelSlsServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-sls');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'sls');
 
         // Register the main class to use with the facade
-        $this->app->singleton('laravel-sls', function ($app) {
-            $config = $app['config']['config'];
+        $this->app->singleton('laravel-sls', function () {
+            $config = config('sls');
+
             $accessKeyId        = Arr::get($config, 'access_key_id');
             $accessKeySecret    = Arr::get($config, 'access_key_secret');
             $endpoint           = Arr::get($config, 'endpoint');
@@ -54,5 +49,12 @@ class LaravelSlsServiceProvider extends ServiceProvider
 
             return $log;
         });
+
+        $this->app->alias(LaravelSls::class, 'sls');
+    }
+
+    public function provides()
+    {
+        return [LaravelSls::class, 'sls'];
     }
 }

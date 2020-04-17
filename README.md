@@ -52,10 +52,4 @@ app('sls')->putLogs([
 	'message' => json_encode(['This should use json_encode'])
 ]);
 
-//or you can use `SLSLog` directly 
-
-SLSLog::putLogs([
-	'type' => 'test',
-	'message' => json_encode(['This should use json_encode'])
-]);
 ```
