@@ -16,12 +16,14 @@
         }
     ],
     "require": {
+        "illuminate/support": "~5.1|~6.0|~7.0",
         "php": ">=7.2",
         "lokielse/aliyun-open-api-sls": "^1.0.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0",
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": "~4.0||~5.0",
+        "scrutinizer/ocular": "~1.1",
+        "squizlabs/php_codesniffer": "~2.3"
     },
     "autoload": {
         "psr-4": {
